@@ -10,9 +10,9 @@ Gem::Specification.new do |s|
   s.author      = "Ryan Burrows"
   s.email       = "rhburrows@crystalcommerce.com"
   s.homepage    = "http://www.crystalcommerce.com"
-  s.summary     = "Crystal Commerce's Development Toolkit"
+  s.summary     = "Crystal Commerce's Debugging Kit"
   s.description = <<-DESC
-    Ccdk is a set of extensions helpful to development and testing
+    Ccdk is a set of extensions helpful to debugging and development
   DESC
 
   s.required_rubygems_version = ">= 1.3.6"

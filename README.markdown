@@ -1,6 +1,6 @@
 # CCDK
 
-The Crystal Commerce Development Kit
+The Crystal Commerce Debugging Kit
 
 ## Description
 
