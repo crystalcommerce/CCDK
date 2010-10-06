@@ -22,5 +22,7 @@ Gem::Specification.new do |s|
   s.files = File.readlines("Manifest.txt").inject([]) do |files, line|
     files + [line.chomp]
   end
+
+  s.executables = ['cc_track_user']
   s.require_path = 'lib'
 end

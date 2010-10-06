@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+require 'zlib'
+require 'ccdk/log_file'
+
+class Tracker
+  def initialize(ip_address)
+    @ip_address = ip_address
+  end
+
+  def track(file_name)
+    log = Ccdk::LogFile.open(file_name)
+
+    log.each_block do |blk|
+      display(blk) if blk =~ /for #{@ip_address}/
+    end
+
+    log.close
+  end
+
+  def display(block)
+    timestamp_method = block.match(/at (.+)\) \[(\w+)\]/)
+    timestamp, method = timestamp_method[1], timestamp_method[2]
+    url = block.match(/\[(http(s?):\/\/.+com\/.*)\]/)
+    params = block.match(/Parameters: (\{.*\})/)
+
+    if url && timestamp && method && params
+      puts timestamp
+      puts "  #{method} #{url[1]}"
+      puts "    #{params[1]}"
+      puts
+    end
+  end
+end
+
+if ARGV.size < 2
+  puts "Usage: cc_track_user IP_ADDR FILE [FILE ...]"
+  exit 1
+end
+
+tracker = Tracker.new(ARGV.shift)
+ARGV.each do |file_name|
+  tracker.track(file_name)
+end

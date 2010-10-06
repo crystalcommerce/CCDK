@@ -1,5 +1,7 @@
 README.markdown
 Manifest.txt
+bin/cc_track_user
 lib/ccdk.rb
+lib/ccdk/log_file.rb
 lib/ccdk/tdump.rb
 lib/ccdk/version.rb
