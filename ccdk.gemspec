@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://www.crystalcommerce.com"
   s.summary     = "Crystal Commerce's Debugging Kit"
   s.description = <<-DESC
-    Ccdk is a set of extensions helpful to debugging and development
+    Ccdk is a set of extensions and scripts helpful to debugging and development
   DESC
 
   s.required_rubygems_version = ">= 1.3.6"
@@ -23,6 +23,6 @@ Gem::Specification.new do |s|
     files + [line.chomp]
   end
 
-  s.executables = ['cc_track_user']
+  s.executables = ['cc_track_user', 'cc_count_actions']
   s.require_path = 'lib'
 end
