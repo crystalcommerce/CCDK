@@ -82,7 +82,9 @@ module Ccdk #:nodoc:
     end
 
     def end_of_block?(line)
-      line.nil? || line =~ /^$/
+      line.nil? || line =~ /^$/ ||
+        line =~ /^Starting the New Relic/ ||
+        line =~ /^\*\* \[Hoptoad\]/
     end
   end
 
