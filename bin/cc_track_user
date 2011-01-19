@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'zlib'
 require 'ccdk/log_file'
 
 class Tracker
@@ -20,7 +19,7 @@ class Tracker
   def display(block)
     timestamp_method = block.match(/at (.+)\) \[(\w+)\]/)
     timestamp, method = timestamp_method[1], timestamp_method[2]
-    url = block.match(/\[(http(s?):\/\/.+com\/.*)\]/)
+    url = block.match(/\[(http(s?):\/\/.+\/.*)\]/)
     params = block.match(/Parameters: (\{.*\})/)
 
     if url && timestamp && method && params
