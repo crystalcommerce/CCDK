@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+require 'ccdk/log_file'
+
+class ActionCounter
+  attr_reader :ignore_domain, :counts
+
+  def initialize(ignore_domain = false)
+    @counts        = {}
+    @ignore_domain = ignore_domain
+  end
+
+  def count(file_name)
+    log = Ccdk::LogFile.open(file_name)
+
+    log.each_block do |blk|
+      a = get_action(blk)
+
+      if a
+        counts[a] ||= 0
+        counts[a] += 1
+      end
+    end
+  end
+
+  def print_results
+    counts.sort{ |a, b| b[1] <=> a[1] }.each do |(action, count)|
+      printf("%6d: %s\n", count, action)
+    end
+  end
+
+  private
+
+  def get_action(block)
+    url = block.match(/\[http(s?):\/\/([^\/?]+(\/[^?]+))(\?.*)?\]/)
+    return nil unless url
+
+    if ignore_domain
+      url[3]
+    else
+      url[2]
+    end
+  end
+end
+
+if ARGV.size < 1
+  puts "Usage: cc_count_actions [--ignore-domain] FILE [FILE ...]"
+  exit 1
+elsif ARGV[0] == "--ignore-domain"
+  counter = ActionCounter.new(true)
+  ARGV.shift
+else
+  counter = ActionCounter.new
+end
+
+ARGV.each do |file_name|
+  counter.count(file_name)
+end
+
+begin
+  counter.print_results
+rescue Errno::EPIPE, Interrupt
+  # Allow the output to be passed to head etc
+end
